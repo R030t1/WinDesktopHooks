@@ -37,16 +37,22 @@ int InitConsole()
 
 int SetHooks(HWND hWnd) {
     HMODULE injectable = LoadLibraryW(LibName);
-    if (NULL == injectable)
+    if (NULL == injectable) {
         cout << "Failed to load library." << endl;
-    
+    }
+
     HOOKPROC CallWndProc = (HOOKPROC)GetProcAddress(injectable, ProcName);
     if (NULL == CallWndProc) {
         cout << "Failed to load hookproc." << endl;
         cout << GetLastError() << endl;
     }
     
-    GlobalCallWndProc = SetWindowsHookExW(WH_CALLWNDPROC, CallWndProc, injectable, 0);
+    DWORD tid = 0;
+    GlobalCallWndProc = SetWindowsHookExW(WH_CALLWNDPROC, CallWndProc, injectable, tid);
+    if (NULL == GlobalCallWndProc) {
+        cout << "Failed to set hook." << endl;
+    }
+
     return 0;
 }
 
