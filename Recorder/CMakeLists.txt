@@ -6,6 +6,14 @@ project(
     VERSION 0.0.1
 )
 
+# TODO: Fix 32/64 bit targeted builds. Possible with ninja?
+# x86_64-w64-mingw32-g++ -municode -mwindows recorder.cc -o recorder64
+# i686-w64-mingw32-g++ -municode -mwindows recorder.cc -o recorder32
+
+# mingw-w64-x86_64-{boost, protobuf, protobuf-c}
+# mingw-w64-i686-{...}
+# protobuf-devel cmake ninja
+
 #set_source_file_properties(
 #    recorder.cc PROPERTIES
 #    LANGUAGE "CXX"

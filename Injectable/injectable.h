@@ -7,8 +7,44 @@
 #define _UNICODE
 #include <Windows.h>
 
-BOOL WINAPI __declspec(dllexport) DllMain(
+extern "C" {
+
+BOOL WINAPI DllMain(
 	_In_ HINSTANCE hinstDLL,
 	_In_ DWORD     fdwReason,
 	_In_ LPVOID    lpvReserved
 );
+
+// Gets called before anything, perhaps the most useful.
+LRESULT CALLBACK DebugProc(
+    _In_ int    nCode,
+    _In_ WPARAM wParam,
+    _In_ LPARAM lParam
+);
+
+// Window management events.
+LRESULT CALLBACK CBTProc(
+    _In_ int    nCode,
+    _In_ WPARAM wParam,
+    _In_ LPARAM lParam
+);
+
+LRESULT CALLBACK CallWndProc(
+    _In_ int    nCode,
+    _In_ WPARAM wParam,
+    _In_ LPARAM lParam
+);
+
+LRESULT CALLBACK MouseProc(
+    _In_ int    nCode,
+    _In_ WPARAM wParam,
+    _In_ LPARAM lParam
+);
+
+LRESULT CALLBACK KeyboardProc(
+    _In_ int    nCode,
+    _In_ WPARAM wParam,
+    _In_ LPARAM lParam
+);
+
+}

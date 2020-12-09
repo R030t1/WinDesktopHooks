@@ -6,6 +6,10 @@ project(
     VERSION 0.0.1
 )
 
+# TODO: Fix 32/64 bit targeted builds.
+# x86_64-w64-mingw32-g++ -municode -shared injectable.cc -o libinjectable64.dll
+# i686-w64-mingw32-g++ -municode -shared injectable.cc -o libinjectable32.dll
+
 #set_source_file_properties(
 #    recorder.cc PROPERTIES
 #    LANGUAGE "CXX"

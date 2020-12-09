@@ -15,7 +15,7 @@
 #include <fstream>
 #include <ios>
 // TODO: Linking error on MSYS2 MinGW-w64.
-//#include <iostream>
+#include <iostream>
 
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/filter/gzip.hpp>

@@ -6,6 +6,54 @@ WCHAR szTitle[] = L"Recorder";
 WCHAR szMenuName[] = L"Recorder";
 WCHAR szWindowClass[] = L"Recorder";
 
+// TODO: Is any define more right? The below works with VSCode 
+// autocomplete, and may be preferred by MSVC++.
+#if defined(_WIN64)
+WCHAR LibName[] = L"..\\Injectable\\libinjectable64.dll";
+CHAR ProcName[] = "CallWndProc";
+#elif defined(_WIN32)
+WCHAR LibName[] = L"..\\Injectable\\libinjectable32.dll";
+CHAR ProcName[] = "CallWndProc@12";
+#endif
+
+HHOOK GlobalCallWndProc;
+
+int InitConsole()
+{
+    FILE *fConsole;
+
+	if (!AllocConsole()) {
+		return 1;
+	}
+	
+	freopen_s(&fConsole, "CONOUT$", "w", stdout);
+	freopen_s(&fConsole, "CONIN$", "r", stdin);
+	//freopen_s(&fConsole, "CONERR$", "w", stderr);
+	
+	cout.clear();
+	ios::sync_with_stdio();
+    return 0;
+}
+
+int SetHooks(HWND hWnd) {
+    HMODULE injectable = LoadLibraryW(LibName);
+    if (NULL == injectable)
+        cout << "Failed to load library." << endl;
+    
+    HOOKPROC CallWndProc = (HOOKPROC)GetProcAddress(injectable, ProcName);
+    if (NULL == CallWndProc) {
+        cout << "Failed to load hookproc." << endl;
+        cout << GetLastError() << endl;
+    }
+    
+    GlobalCallWndProc = SetWindowsHookExW(WH_CALLWNDPROC, CallWndProc, injectable, 0);
+    return 0;
+}
+
+int UnsetHooks(HWND hWnd) {
+    return UnhookWindowsHookEx(GlobalCallWndProc);
+}
+
 int APIENTRY wWinMain(
 	_In_	 HINSTANCE	hInstance,
 	_In_opt_ HINSTANCE	hPrevInstance,
@@ -63,9 +111,17 @@ LRESULT CALLBACK WndProc(
 	_In_ LPARAM	lParam
 ) {
     switch (message) {
+    case WM_CREATE:
+        InitConsole();
+        SetHooks(hWnd);
+        break;
     case WM_DESTROY:
+        UnsetHooks(hWnd);
         PostQuitMessage(0);
+        break;
     default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
+        break;
     }
+
+    return DefWindowProcW(hWnd, message, wParam, lParam);
 }
