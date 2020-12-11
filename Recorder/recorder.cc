@@ -2,14 +2,27 @@
 using namespace std;
 using namespace boost::program_options;
 
+// TODO: Template type.
+// Maybe just use explicit string specifier.
+/*namespace std {
+    std::ostream& operator<<(std::ostream &os, const std::vector<int> &vec) {
+        for (const auto &i : vec)
+            os << i << " ";
+        return os;
+    }
+}*/
+
 int wmain(int argc, wchar_t *argv[]) {
     try {
         options_description desc("Options");
         desc.add_options()
             ("help,h",
                 "Help message")
-            ("tid,t", value<vector<int>>()->multitoken(),
-                "Process/thread IDs to watch");
+            ("thread-ids,t",
+                value<vector<int>>()
+                    ->multitoken()
+                    ->default_value(vector<int>{0}, "0"),
+                "Process/thread IDs to watch (0 is all)");
         
         // Drops argv[0] if there is more than one argument, also
         // does not do globbing.
@@ -22,8 +35,8 @@ int wmain(int argc, wchar_t *argv[]) {
 
         if (vm.count("help")) {
             std::cout << desc << endl;
-        } else if (vm.count("tid")) {
-            auto tids = vm["tid"].as<vector<int>>();
+        } else if (vm.count("thread-ids")) {
+            auto tids = vm["thread-ids"].as<vector<int>>();
             for (const auto &t : tids)
                 std::cout << t << endl;
         }
