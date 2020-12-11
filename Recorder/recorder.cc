@@ -10,11 +10,10 @@ WCHAR szWindowClass[] = L"Recorder";
 // autocomplete, and may be preferred by MSVC++.
 #if defined(_WIN64)
 WCHAR LibName[] = L"..\\Injectable\\libinjectable64.dll";
-CHAR ProcName[] = "CallWndProc";
 #elif defined(_WIN32)
 WCHAR LibName[] = L"..\\Injectable\\libinjectable32.dll";
-CHAR ProcName[] = "CallWndProc@12";
 #endif
+CHAR ProcName[] = "CallWndProc";
 
 HHOOK GlobalCallWndProc;
 
@@ -47,7 +46,7 @@ int SetHooks(HWND hWnd) {
         cout << GetLastError() << endl;
     }
     
-    HWND h = FindWindow(NULL, L"#general - Discord");
+    HWND h = FindWindow(NULL, L"Discord");
     if (NULL == h) {
         cout << "Failed to find window." << endl;
     }

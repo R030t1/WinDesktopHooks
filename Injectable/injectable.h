@@ -29,7 +29,7 @@ LRESULT CALLBACK CBTProc(
     _In_ LPARAM lParam
 );
 
-LRESULT CALLBACK CallWndProc(
+__declspec(dllexport) LRESULT CALLBACK CallWndProc(
     _In_ int    nCode,
     _In_ WPARAM wParam,
     _In_ LPARAM lParam
