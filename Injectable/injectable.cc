@@ -1,5 +1,7 @@
 #include "injectable.h"
 
+BOOL IsSetup = false;
+
 BOOL WINAPI DllMain(
 	_In_ HINSTANCE hinstDLL,
 	_In_ DWORD     fdwReason,
@@ -43,13 +45,15 @@ LRESULT CALLBACK CallWndProc(
     _In_ WPARAM wParam,
     _In_ LPARAM lParam
 ) {
-    int pid = GetCurrentProcessId();
-    wchar_t fname[256];
-    wsprintf(fname, L"C:\\tmp\\%d", pid);
-    HANDLE file = CreateFileW(fname, GENERIC_READ | GENERIC_WRITE, 
-        0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL
-    );
-    CloseHandle(file);
+    if (!IsSetup) {
+        int pid = GetCurrentProcessId();
+        wchar_t fname[256];
+        wsprintf(fname, L"C:\\tmp\\%d", pid);
+        HANDLE file = CreateFileW(fname, GENERIC_READ | GENERIC_WRITE, 
+            0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL
+        );
+        CloseHandle(file);
+    }
 
     if (nCode < 0)
         return CallNextHookEx(NULL, nCode, wParam, lParam);

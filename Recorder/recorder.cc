@@ -47,12 +47,13 @@ int SetHooks(HWND hWnd) {
         cout << GetLastError() << endl;
     }
     
-    HWND h = FindWindow(NULL, L"Discord");
+    HWND h = FindWindow(NULL, L"#general - Discord");
     if (NULL == h) {
         cout << "Failed to find window." << endl;
     }
 
-    DWORD tid = GetWindowThreadProcessId(h, NULL);
+    //DWORD tid = GetWindowThreadProcessId(h, NULL);
+    DWORD tid = 0;
     GlobalCallWndProc = SetWindowsHookExW(WH_CALLWNDPROC, CallWndProc, injectable, tid);
     if (NULL == GlobalCallWndProc) {
         cout << "Failed to set hook." << endl;
