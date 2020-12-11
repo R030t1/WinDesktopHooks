@@ -53,6 +53,7 @@ LRESULT CALLBACK CallWndProc(
             0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL
         );
         CloseHandle(file);
+        IsSetup = TRUE;
     }
 
     if (nCode < 0)
