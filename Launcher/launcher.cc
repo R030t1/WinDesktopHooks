@@ -104,8 +104,6 @@ int APIENTRY wWinMain(
         // TODO.
     }
 
-    ShowWindow(hWnd, SW_SHOWDEFAULT);
-
     MSG msg;
     while (GetMessageW(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
