@@ -2,7 +2,7 @@ cmake_minimum_required(
     VERSION 3.10.2
 )
 project(
-    recorder
+    launcher
     VERSION 0.0.1
 )
 
@@ -30,7 +30,12 @@ find_package(
 include_directories(${Protobuf_INCLUDE_DIRS})
 #protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS records.proto)
 
-add_executable(recorder recorder.cc ${PROTO_SRCS})
+set_source_files_properties(
+    launcher.cc PROPERTIES
+    LANGUAGE CXX
+)
+
+add_executable(launcher launcher.cc ${PROTO_SRCS})
 target_include_directories(
     "${PROJECT_NAME}"
     PUBLIC "${PROJECT_BINARY_DIR}"

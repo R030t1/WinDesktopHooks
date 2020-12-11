@@ -1,10 +1,10 @@
-#include "recorder.h"
+#include "launcher.h"
 using namespace std;
 
 HINSTANCE hInst;
-WCHAR szTitle[] = L"Recorder";
-WCHAR szMenuName[] = L"Recorder";
-WCHAR szWindowClass[] = L"Recorder";
+WCHAR szTitle[] = L"Launcher";
+WCHAR szMenuName[] = L"Launcher";
+WCHAR szWindowClass[] = L"Launcher";
 
 // TODO: Is any define more right? The below works with VSCode 
 // autocomplete, and may be preferred by MSVC++.

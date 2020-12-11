@@ -21,6 +21,12 @@ find_package(
 include_directories(${Protobuf_INCLUDE_DIRS})
 #protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS records.proto)
 
+// TODO: Wildcard .cc files.
+set_source_files_properties(
+    injectable.cc PROPERTIES
+    LANGUAGE CXX
+)
+
 add_library("${PROJECT_NAME}" SHARED injectable.cc ${PROTO_SRCS})
 target_include_directories(
     "${PROJECT_NAME}"
