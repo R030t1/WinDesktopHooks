@@ -17,6 +17,8 @@ project(
 
 set(CMAKE_MODULE_PATH "cmake")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++2a -municode -mwindows")
+# TODO: Fix cmake/msys2 so this isn't necessary.
+set(CMAKE_CXX_COMPILER "/mingw64/bin/x86_64-w64-mingw32-g++")
 
 find_package(
     Boost REQUIRED
@@ -44,4 +46,9 @@ target_link_libraries(
     "${PROJECT_NAME}"
     Boost::iostreams
     ${Protobuf_LIBRARIES}
+)
+target_link_options(
+    "${PROJECT_NAME}" PRIVATE
+    -static -static-libgcc -static-libstdc++
+    -Wl,--enable-stdcall-fixup -Wl,--kill-at
 )

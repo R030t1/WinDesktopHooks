@@ -20,7 +20,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++2a -municode")
 
 find_package(
     Boost REQUIRED
-    COMPONENTS iostreams program_options
+    COMPONENTS system program_options iostreams
 )
 include_directories(${Boost_INCLUDE_DIRS})
 
@@ -31,7 +31,7 @@ include_directories(${Protobuf_INCLUDE_DIRS})
 #protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS records.proto)
 
 set_source_files_properties(
-    recorder.cc PROPERTIES
+    recorder.cxx PROPERTIES
     LANGUAGE CXX
 )
 
@@ -42,7 +42,14 @@ target_include_directories(
 )
 target_link_libraries(
     "${PROJECT_NAME}"
-    Boost::iostreams
+    ws2_32
+    Boost::system
     Boost::program_options
+    Boost::iostreams
     ${Protobuf_LIBRARIES}
+)
+target_link_options(
+    "${PROJECT_NAME}" PRIVATE
+    -static -static-libgcc -static-libstdc++
+    -Wl,--enable-stdcall-fixup -Wl,--kill-at
 )

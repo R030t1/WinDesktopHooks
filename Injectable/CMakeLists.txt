@@ -15,13 +15,16 @@ project(
 set(CMAKE_MODULE_PATH "cmake")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++2a -municode")
 
+# TODO: Fix cmake/msys2 so this isn't necessary.
+set(CMAKE_CXX_COMPILER "/mingw64/bin/x86_64-w64-mingw32-g++")
+
 find_package(
     Protobuf REQUIRED
 )
 include_directories(${Protobuf_INCLUDE_DIRS})
 #protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS records.proto)
 
-// TODO: Wildcard .cc files.
+# TODO: Wildcard .cc files.
 set_source_files_properties(
     injectable.cc PROPERTIES
     LANGUAGE CXX

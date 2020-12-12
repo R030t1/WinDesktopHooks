@@ -1,7 +1,6 @@
 #pragma once
 
 #define _UNICODE
-#include <Windows.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -9,12 +8,18 @@
 
 #include <string>
 #include <fstream>
-#include <ios>
 #include <iostream>
 
+#ifndef __kernel_entry
+    #define __kernel_entry
+#endif
+
 #include <boost/program_options.hpp>
+#include <boost/process.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
+
+#include <Windows.h>
 
 int wmain(
     int argc, 
