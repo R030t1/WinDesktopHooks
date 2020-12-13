@@ -6,9 +6,11 @@ project(
     VERSION 0.0.1
 )
 
+# TODO: Probably just move to Makefiles for MSYS2 based buils, doable
+# in CI without much trouble.
 # TODO: Fix 32/64 bit targeted builds. Possible with ninja?
-# x86_64-w64-mingw32-g++ -municode -mwindows -static -static-libgcc -static-libstdc++ recorder.cc -o recorder64
-# i686-w64-mingw32-g++ -municode -mwindows -static -static-libgcc -static-libstdc++ recorder.cc -o recorder32
+# x86_64-w64-mingw32-g++ -municode -mwindows -static -static-libgcc -static-libstdc++ ../launcher.cc -o launcher64
+# i686-w64-mingw32-g++ -municode -mwindows -static -static-libgcc -static-libstdc++ ../launcher.cc -o launcher32
 
 
 # mingw-w64-x86_64-{boost, protobuf, protobuf-c}
@@ -30,7 +32,7 @@ find_package(
     Protobuf REQUIRED
 )
 include_directories(${Protobuf_INCLUDE_DIRS})
-#protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS records.proto)
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS service.proto)
 
 set_source_files_properties(
     launcher.cc PROPERTIES
@@ -44,8 +46,10 @@ target_include_directories(
 )
 target_link_libraries(
     "${PROJECT_NAME}"
-    Boost::iostreams
-    ${Protobuf_LIBRARIES}
+    ${Boost_LIBRARIES}
+    # TODO: Fix the below, finds /usr/lib... instead of right one.
+    #${Protobuf_LIBRARIES}
+    /mingw64/lib/libprotobuf.dll.a
 )
 target_link_options(
     "${PROJECT_NAME}" PRIVATE

@@ -1,4 +1,4 @@
-#include "launcher.h"
+#include "hklaunch.h"
 using namespace std;
 
 HINSTANCE hInst;
@@ -9,9 +9,9 @@ WCHAR szWindowClass[] = L"Launcher";
 // TODO: Is any define more right? The below works with VSCode 
 // autocomplete, and may be preferred by MSVC++.
 #if defined(_WIN64)
-WCHAR LibName[] = L"libinjectable64.dll";
+WCHAR LibName[] = L"libhkpayload64.dll";
 #elif defined(_WIN32)
-WCHAR LibName[] = L"libinjectable32.dll";
+WCHAR LibName[] = L"libhkpayload32.dll";
 #endif
 CHAR ProcName[] = "CallWndProc";
 

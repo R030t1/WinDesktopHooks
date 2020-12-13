@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service Launcher {
+    rpc Watch (WatchArguments) returns (WatchStatus) {}
+}
+
+message WatchArguments {
+    int32 tid = 1;
+}
+
+message WatchStatus {
+    string msg = 1;
+}

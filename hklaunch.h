@@ -14,7 +14,7 @@
 #include <string>
 #include <iostream>
 
-#include "service.pb.h"
+#include "hklaunchsvc.pb.h"
 
 int APIENTRY wWinMain(
 	_In_	 HINSTANCE	hInstance,
